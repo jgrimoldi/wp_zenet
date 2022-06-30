@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import LinkButtons from '../components/LinkButtons';
 import '../assets/css/Login.css'
 import brandLogo from '../assets/images/logo-brand.svg';
-import { buttonStyle } from '../components/styleButtons';
+import { buttonStyle, textStyle } from '../components/styleButtons';
 
 export default class Principal extends Component {
   render() {
@@ -21,7 +21,7 @@ export default class Principal extends Component {
             </div>
             <div className='col-sm-12 d-flex flex-column align-items-center justify-content-center'>
               <LinkButtons linkStyle={ buttonStyle } linkText='Iniciar Sesión' link="i/login" />
-              <div className='mt-1 p-2'><span className='d-block'>¿No tienes cuenta?</span><LinkButtons linkStyle={ buttonStyle } linkText='Registrate ahora' link="i/register" /> </div>
+              <div className='mt-1 p-2'><span className='d-block'>¿No tienes cuenta?</span><LinkButtons linkStyle={ textStyle } linkText='Registrate ahora' link="i/register" /> </div>
             </div>
           </div>
         </section>
