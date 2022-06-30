@@ -1,0 +1,11 @@
+.bg_gradient {
+    background: rgb(108, 10, 111);
+    background: -moz-linear-gradient(360deg, rgba(108, 10, 111, 1) 6%, rgba(249, 116, 73, 1) 63%);
+    background: -webkit-linear-gradient(360deg, rgba(108, 10, 111, 1) 6%, rgba(249, 116, 73, 1) 63%);
+    background: linear-gradient(360deg, rgba(108, 10, 111, 1) 6%, rgba(249, 116, 73, 1) 63%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#6c0a6f", endColorstr="#f97449", GradientType=1);
+}
+
+.font-white{
+    color: #F9F9F9;
+}
