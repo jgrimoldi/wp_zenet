@@ -1,3 +1,9 @@
+import { orange } from "@mui/material/colors";
+
+export const montserratFamily = {
+    fontFamily: 'Montserrat',
+}
+
 export const buttonStyle = {
     background: '#F04434',
     color: '#F9F9F9',
@@ -15,3 +21,44 @@ export const textStyle = {
     lineHeight: '17px',
     color: '#F97449'
 };
+
+export const inputStyle = {
+    '& label.Mui-focused': {
+        color: '#6c0a6f',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: '#6c0a6f',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderRadius: '2rem',
+            borderColor: '#F97449',
+        },
+        '&:hover fieldset': {
+            borderColor: '#F97449',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: '#6c0a6f',
+        },
+    }
+};
+
+export const checkboxStyle = {
+    color: '#f97449',
+    '&.Mui-checked': {
+        color: orange[600],
+    },
+    '&.MuiFormControlLabel-root': {
+        fontFamily: 'Montserrat'
+    },
+};
+
+export const visibilityStyle = {
+    '&.MuiIconButton-root': {
+        color: '#6c0a6f'
+    }
+}
+
+const multipleExport = { montserratFamily, buttonStyle, textStyle, inputStyle, checkboxStyle, visibilityStyle };
+
+export default multipleExport;

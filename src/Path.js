@@ -16,14 +16,14 @@ function Path() {
     <Routes>
       <Route path="/" element={<Principal />} />
 
-      <Route path="/i" element={<Home />} >
+      <Route path="i" element={<Home />} >
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
         <Route path="reset" element={<ResetPassword />} />
       </Route>
-      <Route path="/terms" element={<Terms />} />
-      <Route path="/dashboard" element={<Dashboard />}>
+      <Route path="terms" element={<Terms />} />
+      <Route path="dashboard" element={<Dashboard />}>
         {/* Rutas del dashboard */}
       </Route>
     </Routes>
