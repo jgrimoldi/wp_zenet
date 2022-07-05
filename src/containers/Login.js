@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, FormControl, FormControlLabel, InputLabel, OutlinedInput, InputAdornment, Checkbox, IconButton, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { montserratFamily, textStyle, buttonStyle, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton } from '../components';
+import { montserratFamily, textStyle, buttonStyle, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton, ErrorText } from '../components';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 export const header = {
@@ -46,13 +46,12 @@ export const Login = () => {
           <h2 className='p-3 form-title'><strong>Inicio de sesion</strong></h2>
           <form>
             <div className='mt-2'>
-              <TextField sx={inputStyle} id='username' label='Usuario' value={values.username} onChange={handleChange('username')} placeholder='Usuario' fullWidth required />
+              <TextField sx={inputStyle} inputProps={{style: montserratFamily }} id='username' label='Usuario' value={values.username} onChange={handleChange('username')} placeholder='Usuario' fullWidth required />
             </div>
             <div className='mt-4 mb-4'>
               <FormControl sx={inputStyle} variant='outlined' fullWidth required>
                 <InputLabel htmlFor='password'>Contraseña</InputLabel>
-                <OutlinedInput id='password' type={values.showPassword ? 'text' : 'password'} value={values.password} label='Contraseña'
-                  onChange={handleChange('password')}
+                <OutlinedInput inputProps={{style: montserratFamily }} id='password' type={values.showPassword ? 'text' : 'password'} value={values.password} label='Contraseña' onChange={handleChange('password')}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton sx={visibilityStyle} aria-label='Mostrar/Ocultar Contraseña'
@@ -63,9 +62,10 @@ export const Login = () => {
                   } />
               </FormControl>
             </div>
-            <div className='recaptcha mb-3'>
+            <div className='recaptcha'>
               <ReCAPTCHA sitekey='6LdmzbsgAAAAAOt3TP5VzgoMnkpZ-0_N9h3ZQBEx' />
             </div>
+            <ErrorText error='Usuario y/o Contraseña incorrectos' />
             <SubmitButton buttonStyle={buttonStyle} buttonText='Iniciar Sesión' />
             <div className='m-2'>
               <FormControlLabel label={<Typography sx={montserratFamily}>Recordarme</Typography>} control={

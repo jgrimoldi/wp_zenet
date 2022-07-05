@@ -48,3 +48,17 @@
 .form-title {
     font-weight: 700;
 }
+
+.error-notice{
+    background: #2C2C2C;
+    margin: 0 0 10px 0;
+    border-radius: 20px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: none;
+    line-height: 17px;
+
+    color: #F9F9F9;
+}

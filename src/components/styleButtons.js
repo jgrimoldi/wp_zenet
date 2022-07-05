@@ -2,6 +2,7 @@ import { orange } from "@mui/material/colors";
 
 export const montserratFamily = {
     fontFamily: 'Montserrat',
+    fontWeight: '600',
 }
 
 export const buttonStyle = {
@@ -31,6 +32,7 @@ export const inputStyle = {
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
+            borderWidth: '2px',
             borderRadius: '2rem',
             borderColor: '#F97449',
         },
@@ -39,8 +41,9 @@ export const inputStyle = {
         },
         '&.Mui-focused fieldset': {
             borderColor: '#6c0a6f',
-        },
-    }
+        }, 
+    },
+
 };
 
 export const checkboxStyle = {
