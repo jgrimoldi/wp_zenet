@@ -18,6 +18,16 @@
     border: 1px solid transparent;
 }
 
+.back-button{
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.back-button > *{
+    color: #F9F9F9 !important;
+}
+
 .full-height {
     min-height: 100vh !important;
 }
