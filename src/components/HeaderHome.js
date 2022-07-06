@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const HeaderHome = ({ header }) => (
-    <div>
+    <div className="m-1">
         <h1 className='mb-0'><strong>{ header.title }</strong></h1>
         <span className='lead f-14'>{ header.subtitle }</span>
     </div>

@@ -7,7 +7,7 @@ export default class Home extends Component {
         return (
             <main className='full-height bg_gradient'>
                 <section className='text-center text-uppercase font-white'>
-                        <div className='p-5'>
+                        <div className='p-3'>
                             <img className='img-fluid mx-auto' src={brandLogo} alt="COMPANY LOGO" />
                         </div>
                         <Outlet />

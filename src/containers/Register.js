@@ -44,7 +44,7 @@ export const Register = () => {
               <SubmitButton buttonStyle={buttonStyle} buttonText='Crear cuenta' />
             </div>
             <div className='col-12'>
-              <FormControlLabel label={<Typography sx={montserratFamily}><span className='w-100 text-muted text-nowrap fw-bolder'>Acepto <LinkButtons linkStyle={textStyle} linkText='Términos y Condiciones' link="../../terms" /></span></Typography>}
+              <FormControlLabel label={<Typography sx={montserratFamily}><span className='w-100 text-muted text-nowrap fw-bolder'>Acepto <LinkButtons linkStyle={textStyle} linkText='Términos y Condiciones' link="../../terms" target='_blank' /></span></Typography>}
                 control={
                   <Checkbox id='terms' sx={checkboxStyle} checked={checked} onChange={handleCheck} label={'Acepto los términos y condiciones'} />
                 }

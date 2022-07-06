@@ -6,6 +6,7 @@ export const montserratFamily = {
 }
 
 export const buttonStyle = {
+    width: '100%',
     background: '#F04434',
     color: '#F9F9F9',
     fontWeight: '700',
