@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const LinkButtons = ({ linkStyle, linkText, link }) => (
     <Fragment>
-        <Link type="button" className="w-100 btn" style={linkStyle} to={link}>
+        <Link type="button" className="btn" style={linkStyle} to={link}>
             {linkText}
         </Link>
     </Fragment>
