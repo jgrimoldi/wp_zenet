@@ -29,10 +29,7 @@ export const ResetPassword = () => {
   };
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+    setValues({ ...values, showPassword: !values.showPassword, });
   };
 
   const handleMouseDownPassword = (event) => {

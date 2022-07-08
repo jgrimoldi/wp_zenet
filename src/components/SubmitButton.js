@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import PropTypes from 'prop-types';
 
-const SubmitButton = ({ buttonText, buttonStyle, buttonName }) => (
+const SubmitButton = ({ buttonText, buttonStyle, buttonName, actionForm }) => (
     <Fragment>
-        <input type="submit" name={ buttonName } className="w-100 text-uppercase btn" style={ buttonStyle } value={ buttonText }  />
+        <input type="submit" onClick={ actionForm } name={ buttonName } className="w-100 text-uppercase btn" style={ buttonStyle } value={ buttonText }  />
     </Fragment>
 );
 
