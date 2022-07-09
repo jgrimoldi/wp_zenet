@@ -63,20 +63,16 @@ export const Login = () => {
         } else if (!RegEx.clave.test(password)) {
           setValues({ ...values, showError: true, error: 'La contraseña debe ser alfanumerica y contener símbolos', loggedIn: false });
         } else {
-          await axios.post(apiUrl + '/auth/login', { email: username, password: password })
-            .then(response => {
-              return response.data;
-            })
-            .then(response => {
-              localStorage.setItem('JWT', response.data.token);
-              setValues({ ...values, showError: false, loggedIn: true });
-            })
-            .catch(error => {
-              if (error.response.data) {
-                console.error(error.response.data);
-                setValues({ ...values, showError: true, error: 'Correo o contraseña incorrectos', loggedIn: false });
-              }
-            })
+          try {
+            const response = await axios.post(apiUrl + '/auth/login', { email: username, password: password })
+            localStorage.setItem('JWT', response.data.token);
+            setValues({ ...values, showError: false, loggedIn: true });
+          } catch (error) {
+            if (error.response.data) {
+              console.error(error.response.data);
+              setValues({ ...values, showError: true, error: 'Correo o contraseña incorrectos', loggedIn: false });
+            }
+          }
         }
       } else {
         setValues({ ...values, showError: true, error: 'Por favor acepta el captcha', loggedIn: false });
