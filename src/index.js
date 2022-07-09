@@ -7,11 +7,13 @@ import Path from './Path';
 import './index.css'
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') 
+  document.getElementById('root')
 );
 
 root.render(
-  <BrowserRouter>
-    <Path />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Path />
+    </BrowserRouter>
+  </React.StrictMode>
 );

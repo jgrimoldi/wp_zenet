@@ -3,6 +3,7 @@ import HeaderHome from './HeaderHome';
 import LinkButtons from './LinkButtons';
 import SubmitButton from './SubmitButton';
 import ErrorText from './ErrorText';
+import RegEx from './RegEx'
 
 export * from './styleButtons';
 
@@ -14,5 +15,6 @@ export {
     styleButtons,
     SubmitButton,
     ErrorText,
+    RegEx,
     apiUrl
 };

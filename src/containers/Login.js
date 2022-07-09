@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { TextField, FormControl, FormControlLabel, InputLabel, OutlinedInput, InputAdornment, Checkbox, IconButton, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { montserratFamily, textStyle, buttonStyle, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton, ErrorText, apiUrl } from '../components';
+import { montserratFamily, textStyle, buttonStyle, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton, ErrorText, RegEx, apiUrl } from '../components';
 import { Navigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
@@ -21,6 +21,7 @@ export const Login = () => {
     loggedIn: false,
     error: '',
     showError: false,
+    validateError: false,
   });
 
   const captcha = useRef(null);
@@ -52,23 +53,31 @@ export const Login = () => {
     const { username, password } = values
 
     if (username === '' || password === '') {
-      setValues({ ...values, showError: true, error: 'El correo y/o contraseña no pueden estar vacíos', loggedIn: false });
+      setValues({ ...values, showError: true, error: 'El correo y/o contraseña están vacíos', loggedIn: false });
     } else {
       if (captcha.current.getValue()) {
-        await axios.post(apiUrl + '/auth/login', { email: username, password: password })
-          .then(response => {
-            return response.data;
-          })
-          .then(response => {
-            // Hacer que el check de recordarme guarde el jwt
-            localStorage.setItem('JWT', response.data.token);
-            setValues({ ...values, showError: false, loggedIn: true });
-          })
-          .catch(error => {
-            // Preguntar cuando sucede el 403
-            console.error(error.response.data);
-            setValues({ ...values, showError: true, error: error.response.data.error, loggedIn: false });
-          })
+        if (!RegEx.correo.test(username)) {
+          setValues({ ...values, showError: true, error: 'El correo no es correcto', loggedIn: false });
+        } else if (password.length < 8) {
+          setValues({ ...values, showError: true, error: 'La contraseña debe tener mas de 8 caractéres', loggedIn: false });
+        } else if (!RegEx.clave.test(password)) {
+          setValues({ ...values, showError: true, error: 'La contraseña debe ser alfanumerica y contener símbolos', loggedIn: false });
+        } else {
+          await axios.post(apiUrl + '/auth/login', { email: username, password: password })
+            .then(response => {
+              return response.data;
+            })
+            .then(response => {
+              localStorage.setItem('JWT', response.data.token);
+              setValues({ ...values, showError: false, loggedIn: true });
+            })
+            .catch(error => {
+              if (error.response.data) {
+                console.error(error.response.data);
+                setValues({ ...values, showError: true, error: 'Correo o contraseña incorrectos', loggedIn: false });
+              }
+            })
+        }
       } else {
         setValues({ ...values, showError: true, error: 'Por favor acepta el captcha', loggedIn: false });
       }
@@ -89,7 +98,7 @@ export const Login = () => {
             <div className='mt-4 mb-4'>
               <FormControl sx={inputStyle} variant='outlined' fullWidth required>
                 <InputLabel htmlFor='password'>Contraseña</InputLabel>
-                <OutlinedInput inputProps={{ style: montserratFamily }} id='password' name='password' type={values.showPassword ? 'text' : 'password'} value={values.password} label='Contraseña' onChange={handleChange('password')}
+                <OutlinedInput inputProps={{ style: montserratFamily }} id='password' name='password' label='Contraseña' value={values.password} onChange={handleChange('password')} type={values.showPassword ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton sx={visibilityStyle} aria-label='Mostrar/Ocultar Contraseña'
