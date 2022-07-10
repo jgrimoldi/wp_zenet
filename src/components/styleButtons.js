@@ -7,7 +7,7 @@ export const montserratFamily = {
 
 export const buttonStyle = {
     width: '100%',
-    background: '#F04434',
+    background: '#F0443A',
     color: '#F9F9F9',
     fontWeight: '700',
     fontSize: '20px',
@@ -16,6 +16,18 @@ export const buttonStyle = {
     borderRadius: '20px',
     boxShadow: '0px 25px 50px - 12px rgba(0, 0, 0, 0.25)'
 };
+
+export const loadingButton = {
+    fontFamily: 'Montserrat',
+    width: '100%',
+    background: 'transparent',
+    color: '#6c0a6f !important',
+    fontSize: '20px',
+    padding: '14px 0',
+    border: '1px solid #6c0a6f !important',
+    borderRadius: '20px',
+    boxShadow: '0px 25px 50px - 12px rgba(0, 0, 0, 0.25)'
+}
 
 export const textStyle = {
     padding: '0',
@@ -42,7 +54,7 @@ export const inputStyle = {
         },
         '&.Mui-focused fieldset': {
             borderColor: '#6c0a6f',
-        }, 
+        },
     },
 
 };
@@ -63,6 +75,6 @@ export const visibilityStyle = {
     }
 }
 
-const multipleExport = { montserratFamily, buttonStyle, textStyle, inputStyle, checkboxStyle, visibilityStyle };
+const multipleExport = { montserratFamily, buttonStyle, loadingButton, textStyle, inputStyle, checkboxStyle, visibilityStyle };
 
 export default multipleExport;

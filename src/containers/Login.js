@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { TextField, FormControl, FormControlLabel, InputLabel, OutlinedInput, InputAdornment, Checkbox, IconButton, Typography } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { montserratFamily, textStyle, buttonStyle, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton, ErrorText, RegEx, apiUrl } from '../components';
+import { Visibility, VisibilityOff, LoginRounded } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { montserratFamily, textStyle, buttonStyle, loadingButton, checkboxStyle, visibilityStyle, inputStyle, HeaderHome, LinkButtons, SubmitButton, ErrorText, RegEx, apiUrl } from '../components';
 import { Navigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
@@ -21,7 +22,7 @@ export const Login = () => {
     loggedIn: false,
     error: '',
     showError: false,
-    validateError: false,
+    loginLoading: false,
   });
 
   const captcha = useRef(null);
@@ -66,7 +67,7 @@ export const Login = () => {
           try {
             const response = await axios.post(apiUrl + '/auth/login', { email: username, password: password })
             localStorage.setItem('JWT', response.data.token);
-            setValues({ ...values, showError: false, loggedIn: true });
+            setValues({ ...values, showError: false, loggedIn: true, loginLoading: true });
           } catch (error) {
             if (error.response.data) {
               console.error(error.response.data);
@@ -109,7 +110,8 @@ export const Login = () => {
               <ReCAPTCHA ref={captcha} sitekey='6LdmzbsgAAAAAOt3TP5VzgoMnkpZ-0_N9h3ZQBEx' onChange={handleCaptcha} />
             </div>
             {values.showError && <ErrorText error={values.error} />}
-            <SubmitButton actionForm={() => loginUser()} buttonStyle={buttonStyle} buttonText='Iniciar Sesión' buttonName='login' />
+            {values.loginLoading ? <LoadingButton sx={loadingButton} loading loadingPosition='end' endIcon={<LoginRounded />} variant='outlined' fullWidth>Iniciando</LoadingButton>
+              : <SubmitButton actionForm={() => loginUser()} buttonStyle={buttonStyle} buttonText='Iniciar Sesión' buttonName='login' />}
             <div className='m-2'>
               <FormControlLabel label={<Typography sx={montserratFamily}>Recordarme</Typography>} control={
                 <Checkbox id='checked' name='checked' sx={checkboxStyle} checked={values.checked} onChange={handleClickCheck} label={'Recordarme'} />
