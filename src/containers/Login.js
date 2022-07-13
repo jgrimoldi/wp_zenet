@@ -76,9 +76,9 @@ export const Login = () => {
               return response.data;
             })
             .then(response => {
-              const accessToken = response.data.token;
-              const roles = response.data.user.fk_perfil;
-              const id = response.data.user.id;
+              const accessToken = response?.data?.token;
+              const roles = response?.data?.user.fk_perfil;
+              const id = response?.data?.user.id;
               setAuth({ id, roles, username, password, accessToken });
               setValues({ ...values, showError: false, loggedIn: true, loginLoading: true });
               navigate(from, { replace: true });
