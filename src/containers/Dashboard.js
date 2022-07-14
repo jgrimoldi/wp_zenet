@@ -1,57 +1,60 @@
-import React, { Component, useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { apiUrl } from '../components';
 import axios from 'axios';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
+import useAuth from '../hooks/useAuth';
 
-export default class Dashboard extends Component {
+const Dashboard = () => {
 
-  constructor() {
-    super();
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [loadingUser, setLoadingUser] = useState(false);
+  // const [error, setError] = useState(false);
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { auth } = useAuth();
 
-    this.state = {
+  useEffect(() => {
+    const componentDidMount = async () => {
 
-      username: '',
-      password: '',
-      loadingUser: false,
-      error: false,
+      const accessString = auth?.accessToken;
+
+      if (accessString == null) {
+        this.setState({ loadingUser: false, error: false });
+      }
+
+      await axios.get(apiUrl + '/auth/', { headers: { Authorization: `JWT ${accessString}` } })
+        .then(response => {
+          return response;
+        })
+        .then(response => {
+          console.log("El access string: " + accessString)
+          console.log(response.data.data);
+        })
+        .catch(error => {
+          console.log(error.response.data);
+        })
     }
-  }
 
-  async componentDidMount() {
-    const accessString = localStorage.getItem('JWT');
+    componentDidMount()
+      .catch(console.error);
 
-    if (accessString == null) {
-      this.setState({ loadingUser: false, error: false });
-    }
-
-    await axios.get(apiUrl + '/auth/', { params: { username: this.state.username }, headers: { Authorization: `JWT ${accessString}` } })
-      .then(response => {
-        console.log("El access string: " + accessString)
-        console.log(response.data.data);
-      })
-      .catch(error => {
-        console.log(error.response.data);
-      })
-  }
+  })
 
 
-
-  logout = async () => {
-    // Esto no puede ir aca adentro, no se puede definir hooks en clases
-    const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
-
+  const Logout = async () => {
     setAuth({});
-    navigate('/linkpage');
+    navigate('/');
   }
 
-  render() {
-    return (
-      <div>
-        Hola soy el DASHBOARD
-        <button onClick={this.logout}>Cerrar Sesion</button>
-      </div>
-    )
-  }
+  return (
+    <div>
+      Hola soy el DASHBOARD
+      <button onClick={Logout}>Cerrar Sesion</button>
+    </div>
+  )
+
 }
+
+export default Dashboard;
