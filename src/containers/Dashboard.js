@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { apiUrl } from '../components';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../services/AuthProvider';
+import AuthServices from '../services/AuthServices';
 import useAuth from '../hooks/useAuth';
 
 const Dashboard = () => {
@@ -19,18 +18,16 @@ const Dashboard = () => {
     const componentDidMount = async () => {
 
       const accessString = auth?.accessToken;
+      const id = auth?.id;
 
       if (accessString == null) {
         this.setState({ loadingUser: false, error: false });
       }
 
-      await axios.get(apiUrl + '/auth/', { headers: { Authorization: `JWT ${accessString}` } })
-        .then(response => {
-          return response;
-        })
+      await AuthServices.getUserById(id, accessString)
         .then(response => {
           console.log("El access string: " + accessString)
-          console.log(response.data.data);
+          console.log(response.data);
         })
         .catch(error => {
           console.log(error.response.data);

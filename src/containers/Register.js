@@ -25,6 +25,10 @@ export const Register = () => {
     setChecked(event.target.checked);
   };
 
+  const registerUser = () => {
+
+  }
+
   return (
     <>
       <HeaderHome header={header} />
@@ -41,7 +45,7 @@ export const Register = () => {
               <ErrorText error='El correo ya ha sido tomado' />
             </div>
             <div className='col-12'>
-              <SubmitButton buttonStyle={buttonStyle} buttonText='Crear cuenta' />
+              <SubmitButton actionForm={() => registerUser} buttonStyle={buttonStyle} buttonText='Crear cuenta' />
             </div>
             <div className='col-12'>
               <FormControlLabel label={<Typography sx={montserratFamily}><span className='w-100 text-muted text-nowrap fw-bolder'>Acepto <LinkButtons linkStyle={textStyle} linkText='Términos y Condiciones' link="../../terms" target='_blank' /></span></Typography>}

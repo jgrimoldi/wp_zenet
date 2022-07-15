@@ -5,7 +5,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import Path from './Path';
-import { AuthProvider } from './context/AuthProvider'
+import { AuthProvider } from './services/AuthProvider'
 
 
 const root = ReactDOM.createRoot(
