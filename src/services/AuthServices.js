@@ -31,17 +31,22 @@ const register = (email, password, nombre, apellido) => {
     )
 }
 
-const logIn = (username, password) => {
+const logIn = (email, password) => {
     return (
-        axios.post(API_URL + 'login', { email: username, password: password })
+        axios.post(API_URL + 'login', { email: email, password: password })
             .then(response => {
                 return response.data;
             })
     )
 }
 
-const forgotPassword = () => {
-
+const forgotPassword = (email) => {
+    return (
+        axios.post(API_URL + 'forgotPassword', { email })
+            .then(response => {
+                return response.data
+            })
+    )
 }
 
 const AuthServices = {
