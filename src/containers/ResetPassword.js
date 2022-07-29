@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Tooltip, ClickAwayListener } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   montserratFamily,
@@ -8,7 +8,8 @@ import {
   HeaderHome,
   SubmitButton,
   visibilityStyle,
-  ErrorText
+  ErrorText,
+  tooltipStyle
 } from '../components';
 
 export const header = {
@@ -18,18 +19,23 @@ export const header = {
 
 export const ResetPassword = () => {
 
-  const [values, setValues] = React.useState({
-    password: '',
-    passwordVerify: '',
-    showPassword: false,
-  });
+  const initialValues = { password: '', passwordVerify: '' };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [tooltip, setTooltip] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  // const [showError, setShowError] = useState({ value: '', error: null });
+  // const [successful, setSuccessful] = useState(null);
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setFormValues({ ...formValues, [prop]: event.target.value });
   };
 
+  const handleClose = () => {
+    setTooltip(false);
+  }
+
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword, });
+    setShowPassword(!showPassword);
   };
 
   const handleMouseDownPassword = (event) => {
@@ -44,44 +50,76 @@ export const ResetPassword = () => {
           <div className='header-form'>
             <h2 className='p-3 form-title'><strong>Recuperación de clave</strong></h2>
           </div>
-          <form className='row g-3'>
+          <article className='row g-3'>
 
             <div className='col-12'>
-              <FormControl sx={inputStyle} variant='outlined' fullWidth required>
-                <InputLabel htmlFor='password'>Nueva contraseña</InputLabel>
-                <OutlinedInput inputProps={{ style: montserratFamily }} id='password' type={values.showPassword ? 'text' : 'password'} value={values.password} label='Nueva contraseña' onChange={handleChange('password')}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton sx={visibilityStyle} aria-label='Mostrar/Ocultar Contraseña'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge='end' >{values.showPassword ? <VisibilityOff /> : <Visibility />} </IconButton>
-                    </InputAdornment>
-                  } />
-              </FormControl>
+              <ClickAwayListener onClickAway={handleClose}>
+                <Tooltip sx={tooltipStyle} placement='top-end' arrow disableFocusListener disableHoverListener disableTouchListener
+                  onClose={handleClose} open={tooltip}
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  title='Debe contener: Mayúsculas, Minúsculas, Números y Símbolos'>
+                  <FormControl sx={inputStyle} variant='outlined' fullWidth required>
+
+                    <InputLabel htmlFor='password'>Contraseña</InputLabel>
+                    <OutlinedInput inputProps={{ style: montserratFamily }} id='password' name='password'
+                      label='Contraseña'
+                      value={formValues.password}
+                      onChange={handleChange('password')}
+                      placeholder='Contraseña (8 a 64 carácteres)'
+                      type={showPassword ? 'text' : 'password'}
+                      autoComplete='new-password'
+                      endAdornment={
+                        <InputAdornment position='end'>
+                          <IconButton sx={visibilityStyle} aria-label='Mostrar/Ocultar Contraseña'
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge='end' >{showPassword ? <VisibilityOff /> : <Visibility />} </IconButton>
+                        </InputAdornment>
+                      } />
+
+                  </FormControl>
+                </Tooltip>
+              </ClickAwayListener>
             </div>
 
             <div className='col-12'>
               <FormControl sx={inputStyle} variant='outlined' fullWidth required>
                 <InputLabel htmlFor='passwordVerify'>Confirmar contraseña</InputLabel>
-                <OutlinedInput inputProps={{ style: montserratFamily }} id='passwordVerify' type={values.showPassword ? 'text' : 'password'} value={values.passwordVerify} label='Confirmar contraseña' onChange={handleChange('passwordVerify')}
+                <OutlinedInput inputProps={{ style: montserratFamily }} id='passwordVerify' name='passwordVerify'
+                  label='Confirmar contraseña'
+                  value={formValues.passwordVerify}
+                  onChange={handleChange('passwordVerify')}
+                  placeholder='Confirmar contraseña'
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete='new-password'
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton sx={visibilityStyle} aria-label='Mostrar/Ocultar Contraseña'
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
-                        edge='end' >{values.showPassword ? <VisibilityOff /> : <Visibility />} </IconButton>
+                        edge='end' >{showPassword ? <VisibilityOff /> : <Visibility />} </IconButton>
                     </InputAdornment>
                   } />
               </FormControl>
             </div>
-            <div className='col-12'>
-              <ErrorText error='Las contraseñas no coinciden' />
-            </div>
+            {/* {showError.error &&
+              <div className='col-12'>
+                <ErrorText error={showError.value} />
+              </div>
+            }
+            {successful &&
+              <div className='col-12'>
+                <div className="successful-notice">
+                  La contraseña fue reestablecida con exito!
+                </div>
+              </div>
+            } */}
             <div className='col-12'>
               <SubmitButton buttonStyle={buttonStyle} buttonText='Confirmar' />
             </div>
-          </form>
+          </article>
         </div>
       </div>
     </>
