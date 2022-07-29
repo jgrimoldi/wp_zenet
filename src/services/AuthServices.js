@@ -21,10 +21,12 @@ const getUserById = (id, accessToken) => {
 }
 
 const register = (email, password, nombre, apellido) => {
+    const fk_perfil = "1";
+    const fk_empresa = "12345678";
     return (
-        axios.post(API_URL + 'register', { email, password, nombre, apellido })
+        axios.post(API_URL + 'register', { email, password, nombre, apellido, fk_perfil, fk_empresa })
             .then(response => {
-                return response.data
+                return response.data;
             })
     )
 }

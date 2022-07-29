@@ -78,8 +78,10 @@ export const Login = () => {
 
           })
           .catch(error => {
+            console.log(error.response.status);
+
             if (error.response) {
-              console.error(error.response.data);
+              console.error(error.response.data.error);
               setValues({ ...values, showErrors: true, error: 'Correo o contraseña incorrectos', isSubmit: false });
             }
           })

@@ -75,6 +75,16 @@ export const visibilityStyle = {
     }
 }
 
-const multipleExport = { montserratFamily, buttonStyle, loadingButton, textStyle, inputStyle, checkboxStyle, visibilityStyle };
+export const tooltipStyle = {
+    '& .tooltipClasses.arrow': {
+        color: '#343434',
+    },
+    '&.tooltipClasses.tooltip': {
+        backgroundColor: '#343434',
+        marginBottom: 0,
+    },
+}
+
+const multipleExport = { montserratFamily, buttonStyle, loadingButton, textStyle, inputStyle, checkboxStyle, visibilityStyle, tooltipStyle };
 
 export default multipleExport;
