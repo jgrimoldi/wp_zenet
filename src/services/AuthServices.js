@@ -49,12 +49,30 @@ const forgotPassword = (email) => {
     )
 }
 
+const resetPassword = (token) => {
+    return(
+        axios.get(API_URL + 'reset', {params: {resetPasswordToken: token}})
+        .then(response => {
+            return response.data
+        })
+    )
+}
+
+const updateViaEmail = (email, password, token) =>{
+    return(
+        axios.put(API_URL + 'updatePasswordViaEmail', {email, password, resetPasswordToken: token})
+    )
+}
+
+
 const AuthServices = {
     getUsers,
     getUserById,
     register,
     logIn,
-    forgotPassword
+    forgotPassword,
+    resetPassword,
+    updateViaEmail
 }
 
 export default AuthServices;

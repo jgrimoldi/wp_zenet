@@ -23,7 +23,7 @@ function Path() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
-        <Route path="reset" element={<ResetPassword />} />
+        <Route path="reset/:token" element={<ResetPassword />} />
       </Route>
       <Route path="terms" element={<Terms />} />
 
