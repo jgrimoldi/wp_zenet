@@ -30,6 +30,7 @@ export const ResetPassword = () => {
   const [successful, setSuccessful] = useState(null);
   const [accessToken, setAccessToken] = useState({ email: '', token: '' });
   const [errorToken, setErrorToken] = useState({ value: '', error: true });
+  const [isValidToken, setIsValidToken] = useState(null);
 
   const { token } = useParams();
 
@@ -63,6 +64,7 @@ export const ResetPassword = () => {
         const email = response.data.email;
 
         if (message === 'PASSWORD_RESET_LINK_OK') {
+          setIsValidToken(true);
           setAccessToken({ ...accessToken, email: { email }, token: { token } });
           setErrorToken({ ...errorToken, error: false });
         }
@@ -70,6 +72,8 @@ export const ResetPassword = () => {
       })
       .catch(error => {
         const errorMessage = error.response.data.error;
+
+        setIsValidToken(false);
 
         if (errorMessage === 'PASSWORD_RESET_LINK_IS_INVALID_OR_HAS_EXPIRED') {
           setErrorToken({ ...errorToken, value: 'El link de recuperación ha expirado, vuelva a intentar', error: false });
@@ -113,9 +117,7 @@ export const ResetPassword = () => {
 
   const handleSubmit = async () => {
 
-    if (errorToken.error && !accessToken.email && !accessToken.token) {
-
-    } else {
+    if (isValidToken) {
       if (!showError.error && formValues.password === formValues.passwordVerify) {
 
         await AuthServices.updateViaEmail(accessToken.email, formValues.password, accessToken.token)
@@ -154,7 +156,7 @@ export const ResetPassword = () => {
             <h2 className='p-3 form-title'><strong>Recuperación de clave</strong></h2>
           </div>
           <form className='row g-3'>
-            {errorToken.error && !accessToken.email && !accessToken.token ?
+            {isValidToken ?
               (<>
                 < div className='col-12'>
                   <ClickAwayListener onClickAway={handleClose}>
@@ -233,7 +235,6 @@ export const ResetPassword = () => {
                 <h2 className='p-3 form-title'><strong>{errorToken.value}</strong></h2>
               </div>)
             }
-
           </form>
         </div>
       </div >
