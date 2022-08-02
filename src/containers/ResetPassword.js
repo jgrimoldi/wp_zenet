@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import AuthServices from '../services/AuthServices';
 import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Tooltip, ClickAwayListener } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -31,6 +31,12 @@ export const ResetPassword = () => {
   const [accessToken, setAccessToken] = useState({ email: '', token: '' });
   const [errorToken, setErrorToken] = useState({ value: '', error: true });
   const [isValidToken, setIsValidToken] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fromOk = location.state?.from?.pathname || "../login/";
+  const fromErr = location.state?.from?.pathname || "../forgotPassword/";
+
+
 
   const { token } = useParams();
 
@@ -65,7 +71,7 @@ export const ResetPassword = () => {
 
         if (message === 'PASSWORD_RESET_LINK_OK') {
           setIsValidToken(true);
-          setAccessToken({ ...accessToken, email: { email }, token: { token } });
+          setAccessToken({ ...accessToken, email: email, token: token });
           setErrorToken({ ...errorToken, error: false });
         }
 
@@ -82,6 +88,10 @@ export const ResetPassword = () => {
         } else {
           setErrorToken({ ...errorToken, value: 'Ocurrió un error, vuelva a intentar', error: false });
         }
+
+        setTimeout(() => {
+          navigate(fromErr, { replace: true });
+        }, 5000)
 
       })
 
@@ -118,22 +128,34 @@ export const ResetPassword = () => {
   const handleSubmit = async () => {
 
     if (isValidToken) {
+
       if (!showError.error && formValues.password === formValues.passwordVerify) {
 
         await AuthServices.updateViaEmail(accessToken.email, formValues.password, accessToken.token)
           .then(response => {
-            if (response.data === 'UPDATE_PASSWORD_EMAIL_OK') {
+            if (response.data.message === 'UPDATE_PASSWORD_EMAIL_OK') {
+              setFormValues({ ...formValues, password: '', passwordVerify: '' })
               setSuccessful(true);
             }
+
+            setTimeout(() => {
+              navigate(fromOk, { replace: true });
+            }, 5000)
           })
           .catch(error => {
             const errorMessage = error.response.data.error;
+
+            console.log(error)
 
             if (errorMessage === 'UPDATE_PASSWORD_EMAIL_RESET_LINK_IS_INVALID_OR_HAS_EXPIRED') {
               setShowError({ ...showError, value: 'El link de recuperación ha expirado, vuelva a intentar', error: true });
             } else {
               setShowError({ ...showError, value: 'Ocurrió un error, vuelva a intentar', error: true });
             }
+
+            setTimeout(() => {
+              navigate(fromErr, { replace: true });
+            }, 5000)
           })
 
       } else {
@@ -155,7 +177,7 @@ export const ResetPassword = () => {
           <div className='header-form'>
             <h2 className='p-3 form-title'><strong>Recuperación de clave</strong></h2>
           </div>
-          <form className='row g-3'>
+          <article className='row g-3'>
             {isValidToken ?
               (<>
                 < div className='col-12'>
@@ -235,7 +257,7 @@ export const ResetPassword = () => {
                 <h2 className='p-3 form-title'><strong>{errorToken.value}</strong></h2>
               </div>)
             }
-          </form>
+          </article>
         </div>
       </div >
     </>

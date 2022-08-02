@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AuthServices from '../services/AuthServices'
 import {
   montserratFamily,
@@ -20,6 +21,9 @@ export const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [showError, setShowError] = useState({ value: '', error: null });
   const [successful, setSuccessful] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "../login/";
 
   const handleChange = (event) => {
     setEmail(event.target.value);
@@ -58,8 +62,17 @@ export const ForgotPassword = () => {
 
       await AuthServices.forgotPassword(email)
         .then(response => {
-          console.log(response);
-          setSuccessful(true);
+
+          console.log(response)
+
+          if (response.error === 'EMAIL_HAS_BEEN_SENT_SUCCESS') {
+            setSuccessful(true);
+            setTimeout(() => {
+              navigate(from, { replace: true });
+            }, 5000)
+          }
+
+
         })
         .catch(error => {
           console.log(error);

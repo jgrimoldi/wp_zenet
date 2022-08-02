@@ -50,17 +50,20 @@ const forgotPassword = (email) => {
 }
 
 const resetPassword = (token) => {
-    return(
+    return (
         axios.get(API_URL + 'reset/' + token)
-        .then(response => {
-            return response.data
-        })
+            .then(response => {
+                return response.data
+            })
     )
 }
 
-const updateViaEmail = (email, password, token) =>{
-    return(
-        axios.put(API_URL + 'updatePasswordViaEmail', {email, password, resetPasswordToken: token})
+const updateViaEmail = (email, password, token) => {
+    return (
+        axios.put(API_URL + 'updatePasswordViaEmail', { email: email, password: password, resetPasswordToken: token })
+            .then(response => {
+                return response.data
+            })
     )
 }
 
